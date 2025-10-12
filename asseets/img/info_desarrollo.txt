@@ -1,0 +1,63 @@
+[ ] 1. Fundamentos de cómo funciona Internet
+[ ] Conocer qué es Internet y cómo funciona
+[ ] Saber qué es HTTP y HTTPS
+[ ] Entender qué es un dominio y DNS
+[ ] Conocer qué es una dirección IP
+[ ] Saber qué es un hosting y un servidor
+
+[ ] 2. Arquitectura Cliente-Servidor
+[ ] Diferenciar cliente y servidor
+[ ] Entender el ciclo Request/Response
+[ ] Saber qué es Backend y Frontend
+
+[ ] 3. Bases de Datos
+[ ] Saber qué es una base de datos
+[ ] Conocer diferencia entre SQL y NoSQL
+[ ] Saber realizar operaciones CRUD
+
+[ ] 4. APIs
+[ ] Entender qué es una API
+[ ] Conocer API REST y su uso
+[ ] Saber qué es un endpoint
+[ ] Conocer métodos HTTP (GET, POST, PUT/PATCH, DELETE)
+
+[ ] 5. HTML, CSS y JavaScript
+[ ] Conocer la estructura HTML
+[ ] Aplicar estilos con CSS
+[ ] Usar JavaScript para manipular el DOM
+[ ] Manejar eventos (click, scroll, input)
+
+[ ] 6. Maquetado Dinámico
+[ ] Insertar elementos dinámicamente en el DOM
+[ ] Manipular clases y estilos con JS
+[ ] Renderizar listas desde arrays/objetos
+[ ] Crear formularios dinámicos con validación
+
+[ ] 7. Consumir APIs desde el Frontend
+[ ] Usar fetch() para obtener datos
+[ ] Manejar JSON en JavaScript
+[ ] Usar promesas y async/await
+[ ] Mostrar datos en HTML dinámico
+
+[ ] 8. Git y GitHub
+[ ] Inicializar un repositorio con git init
+[ ] Añadir cambios con git add
+[ ] Guardar cambios con git commit
+[ ] Subir cambios con git push
+[ ] Conocer qué es GitHub y cómo colaborar
+
+[ ] 9. Buenas Prácticas
+[ ] Escribir comentarios claros
+[ ] Mantener indentación y formato consistente
+[ ] Usar nombres descriptivos para variables y funciones
+[ ] Separar HTML, CSS y JS
+[ ] Usar console.log y depuración en el navegador
+
+[ ] 10. Conceptos Avanzados
+[ ] Entender AJAX y asincronía
+[ ] Hacer responsive design
+[ ] Conocer idea general de frameworks (React, Angular, Vue)
+[ ] Manejar errores con try/catch
+[ ] Conocer principios básicos de seguridad en frontend
+[ ] Hacer deploy de un proyecto en internet
+

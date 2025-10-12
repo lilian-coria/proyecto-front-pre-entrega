@@ -1,0 +1,361 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap');
+
+* {  
+    font-family: "Montserrat", serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #f4f2f2;
+    color: #1d1a1a;
+}
+
+h1 {
+    color: rgb(21, 7, 68);
+    text-align: center;
+    font-size: 2em;
+}
+
+h2 {
+    color: rgb(16, 15, 15);
+    text-align: center;
+    font-size: 1.5em;
+    margin-bottom: 20px;
+}
+
+a {
+    text-decoration: none;
+}
+
+/* Header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 24px;
+}
+
+.logo {
+    padding: 10px;
+}
+
+/* Imagen general */
+img {
+    border-radius: 50%;
+}
+
+/* Contacto Formulario */
+.contacto-form {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.contacto-form div {
+    display: flex;
+    flex-direction: column;
+}
+
+.contacto-form label {
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+.contacto-form input,
+.contacto-form textarea {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1em;
+    margin-bottom: 5px;
+}
+
+.btn-enviar {
+    background: #2d2d6b;
+    color: #fff;
+    border: none;
+    padding: 10px 0;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-enviar:hover {
+    background: #1d1a1a;
+}
+
+@media (max-width: 600px) {
+    .contacto-form {
+        max-width: 95vw;
+        padding: 10px;
+    }
+    .contacto-form input,
+    .contacto-form textarea {
+        font-size: 0.95em;
+    }
+}
+
+/* NAV */
+nav {
+    display: flex;
+    align-items: center;
+    padding: 30px;
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+    gap: 30px;
+}
+
+/* Texto Principal */
+.contedorTextoPrincipal {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-image: url(../asseets/img/mas\ oscurec.webp);
+    background-size: cover;
+    background-position: center 0px;
+    color: rgb(20, 19, 19);
+    height: 85vh;
+}
+
+.contedorTextoPrincipal h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: rgb(12, 10, 10);
+    margin-bottom: 20px;
+}
+
+.contedorTextoPrincipal p {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2rem;
+    padding-top: 150px;
+    color: black !important;
+    font-style: italic;
+}
+
+.contedorTextoPrincipal a {
+    display: inline;
+    color: rgb(237, 212, 237);
+    text-decoration: none;
+    font-size: 2em;
+}
+
+/* Destacados */
+.destacados {
+    margin-top: 5rem;
+    padding: 20px;
+    background-color: #f4e3ef;
+    color: rgb(11, 10, 10);
+}
+
+.destacados h2 {
+    color: black;
+    font-size: 1.5em;
+    margin-bottom: 20px;
+}
+
+/* Nosotros */
+.nosotros-section {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+    justify-content: center;
+    background: #f7f9fa;
+    padding: 30px 0;
+    border-radius: 12px;
+    margin: 30px 0;
+}
+
+.nosotros-video {
+    flex: 1 1 300px;
+    max-width: 400px;
+}
+
+.nosotros-texto {
+    flex: 1 1 300px;
+    max-width: 400px;
+}
+
+.nosotros-texto h4 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+    color: #2d2d6b;
+}
+
+.nosotros-texto p {
+    font-size: 1.1em;
+    color: #333;
+}
+
+@media (max-width: 900px) {
+    .nosotros-section {
+        flex-direction: column;
+        gap: 15px;
+        padding: 20px 0;
+    }
+    .nosotros-video, .nosotros-texto {
+        max-width: 95vw;
+    }
+}
+
+/* Contacto Section */
+.contacto-section {
+    background: #eaf6fb;
+    padding: 30px 0;
+    border-radius: 12px;
+    margin: 30px 0;
+}
+
+/* Imagen Destacados */
+.imagenDestacados {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    gap: 20px;
+    max-width: 70%;
+    margin: 0 auto;
+}
+
+.imagenDestacados div {
+    text-align: center;
+    width: 300px;
+    height: 300px;
+    border-radius: 5px;
+}
+
+.imagenDestacados img {
+    width: 100%;
+    height: 75%;
+    border-radius: 5px;
+    object-fit: cover;
+}
+
+/* Separador Envios */
+.SeparadorEnvios {
+    display: flex;
+    justify-content: center;
+    padding: 40px 20px;
+    gap: 20px;
+    background-color: #f4e3ef;
+    margin: 7rem 0;
+    color: white;
+}
+
+.SeparadorEnvios .LetraSeparador {
+    color: black;
+    font-size: 20px;
+}
+
+.SeparadorEnvios a {
+    color: white !important;
+}
+
+/* Footer */
+.footer {
+    display: flex;
+    flex-direction: column;
+    font-size: 10px;
+    padding: 0 40px;
+}
+
+.naveFooter {
+    display: flex;
+    justify-content: space-between;
+}
+
+.logoFooter img {
+    border-radius: 50%;
+    padding: 0;
+}
+
+.informacionFooter {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 0;
+}
+
+.informacionFooter p {
+    font-size: 20px;
+}
+
+.informacionFooter ul {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    list-style: none;
+}
+
+.informacionFooter a {
+    font-size: 12px;
+    text-decoration: none;
+    color: black;
+}
+
+.informacionFooter a:hover {
+    color: aqua;
+}
+
+.redesFooter {
+    display: flex;
+    flex-direction: column;
+}
+
+.secRedes {
+    display: flex;
+}
+
+ul {
+    list-style: none;
+}
+
+ul a {
+    color: rgb(14, 13, 13);
+    text-decoration: none;
+    font-size: 1em;
+}
+/* Derechos reservados footer */
+.footer-derechos {
+    text-align: center;
+    color: #555;
+    font-size: 1em;
+    margin: 18px 0 0 0;
+    letter-spacing: 1px;
+    font-weight: 500;
+}
+
+.fa-instagram,
+.fa-twitter,
+.fa-facebook {
+    font-size: 3em;
+}
+
+.fa-whatsapp {
+    font-size: 5em;
+    color: green;
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+}
+
+p {
+    margin-top: 20px;
+    color: rgb(14, 13, 13);
+    font-size: 1em;
+}
