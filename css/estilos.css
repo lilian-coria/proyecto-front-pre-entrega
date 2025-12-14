@@ -80,6 +80,20 @@ img {
     margin-bottom: 5px;
 }
 
+/* Contact form messages */
+.contact-success {
+    color: #155724;
+    background: #d4edda;
+    padding: 8px 10px;
+    border-radius: 6px;
+}
+.contact-error {
+    color: #721c24;
+    background: #f8d7da;
+    padding: 8px 10px;
+    border-radius: 6px;
+}
+
 .btn-enviar {
     background: #2d2d6b;
     color: #fff;
@@ -245,6 +259,64 @@ nav ul {
     border-radius: 5px;
     object-fit: cover;
 }
+
+/* Carrito */
+.cart-count {
+    display: inline-block;
+    background: #e74c3c;
+    color: white;
+    font-size: 0.8rem;
+    padding: 2px 6px;
+    border-radius: 12px;
+    margin-left: 6px;
+}
+
+.cart {
+    position: fixed;
+    right: 20px;
+    top: 80px;
+    width: 320px;
+    max-height: 80vh;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    overflow: auto;
+    transform: translateY(-10px) scale(0.98);
+    opacity: 0;
+    pointer-events: none;
+    transition: all 200ms ease;
+    z-index: 9999;
+}
+
+.cart.open {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.cart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    border-bottom: 1px solid #eee;
+}
+
+.cart-items { padding: 12px 16px; }
+.cart-item { display: flex; gap: 10px; margin-bottom: 12px; align-items: center; }
+.cart-item img { width: 64px; height: 64px; object-fit: cover; border-radius: 6px; }
+.item-info h4 { font-size: 0.95rem; margin-bottom: 6px; }
+.item-price { color: #2d2d6b; font-weight: 700; margin-bottom: 6px; }
+.qty-controls { display: flex; gap: 6px; align-items: center; }
+.qty-controls button { background: #eee; border: none; padding: 6px 8px; border-radius: 4px; cursor: pointer; }
+.qty-controls .remove { background: transparent; color: #e74c3c; margin-left: 8px; }
+.cart-footer { padding: 12px 16px; border-top: 1px solid #eee; display:flex; justify-content: space-between; align-items: center; gap: 8px; }
+.cart-actions { display:flex; gap:8px; }
+.btn-clear, .btn-checkout { padding: 8px 12px; border-radius: 6px; border: none; cursor: pointer; }
+.btn-checkout { background: #2d2d6b; color: #fff; }
+.btn-clear { background: #f3f3f3; }
+
+.empty { text-align: center; color: #666; }
 
 /* Separador Envios */
 .SeparadorEnvios {

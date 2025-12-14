@@ -1,0 +1,200 @@
+// Carrito simple: añadir, mostrar, actualizar cantidad, eliminar, persistir en localStorage
+document.addEventListener('DOMContentLoaded', () => {
+	const addButtons = document.querySelectorAll('.add-to-cart');
+	const cartToggle = document.getElementById('cart-toggle');
+	const cart = document.getElementById('cart');
+	const cartClose = document.getElementById('cart-close');
+	const cartItemsContainer = document.getElementById('cart-items');
+	const cartTotalEl = document.getElementById('cart-total');
+	const cartCountEl = document.getElementById('cart-count');
+	const cartClearBtn = document.getElementById('cart-clear');
+	const checkoutBtn = document.getElementById('checkout');
+
+	let cartData = loadCart();
+	renderCart();
+
+	// listeners
+	addButtons.forEach(btn => btn.addEventListener('click', onAddClick));
+	cartToggle.addEventListener('click', (e) => { e.preventDefault(); toggleCart(); });
+	cartClose.addEventListener('click', () => closeCart());
+	cartClearBtn.addEventListener('click', () => { cartData = []; saveCart(); renderCart(); });
+	checkoutBtn.addEventListener('click', () => { alert('Gracias por su compra (demo).'); cartData = []; saveCart(); renderCart(); closeCart(); });
+
+	// functions
+	function onAddClick(e) {
+		e.preventDefault();
+		const productEl = e.target.closest('.product');
+		const name = productEl.querySelector('h3').textContent.trim();
+		const img = productEl.querySelector('img')?.getAttribute('src') || '';
+		const priceText = productEl.querySelector('h4').textContent.trim();
+		const price = parsePrice(priceText);
+
+		addToCart({ name, img, price });
+	}
+
+	function addToCart(item) {
+		const existing = cartData.find(i => i.name === item.name);
+		if (existing) {
+			existing.qty += 1;
+		} else {
+			cartData.push({ ...item, qty: 1 });
+		}
+		saveCart();
+		renderCart();
+		openCartBrief();
+	}
+
+	function renderCart() {
+		cartItemsContainer.innerHTML = '';
+		let total = 0;
+		let count = 0;
+		if (cartData.length === 0) {
+			cartItemsContainer.innerHTML = '<p class="empty">El carrito está vacío</p>';
+		} else {
+			cartData.forEach((it, idx) => {
+				const itemEl = document.createElement('div');
+				itemEl.className = 'cart-item';
+				itemEl.innerHTML = `
+					<img src="${it.img}" alt="${it.name}">
+					<div class="item-info">
+						<h4>${it.name}</h4>
+						<p class="item-price">$${formatNumber(it.price)}</p>
+						<div class="qty-controls">
+							<button class="qty-decrease" data-idx="${idx}">-</button>
+							<span class="qty">${it.qty}</span>
+							<button class="qty-increase" data-idx="${idx}">+</button>
+							<button class="remove" data-idx="${idx}" title="Eliminar">Eliminar</button>
+						</div>
+					</div>
+				`;
+				cartItemsContainer.appendChild(itemEl);
+
+				total += it.price * it.qty;
+				count += it.qty;
+			});
+		}
+
+		cartTotalEl.textContent = `$${formatNumber(total)}`;
+		cartCountEl.textContent = count;
+
+		// attach qty/remove listeners
+		cartItemsContainer.querySelectorAll('.qty-increase').forEach(b => b.addEventListener('click', onIncrease));
+		cartItemsContainer.querySelectorAll('.qty-decrease').forEach(b => b.addEventListener('click', onDecrease));
+		cartItemsContainer.querySelectorAll('.remove').forEach(b => b.addEventListener('click', onRemove));
+	}
+
+	function onIncrease(e) {
+		const idx = +e.target.dataset.idx;
+		cartData[idx].qty += 1;
+		saveCart(); renderCart();
+	}
+
+	function onDecrease(e) {
+		const idx = +e.target.dataset.idx;
+		if (cartData[idx].qty > 1) {
+			cartData[idx].qty -= 1;
+		} else {
+			cartData.splice(idx, 1);
+		}
+		saveCart(); renderCart();
+	}
+
+	function onRemove(e) {
+		const idx = +e.target.dataset.idx;
+		cartData.splice(idx, 1);
+		saveCart(); renderCart();
+	}
+
+	function saveCart() {
+		localStorage.setItem('cart', JSON.stringify(cartData));
+	}
+
+	function loadCart() {
+		try {
+			const raw = localStorage.getItem('cart');
+			return raw ? JSON.parse(raw) : [];
+		} catch (err) {
+			return [];
+		}
+	}
+
+	function parsePrice(text) {
+		// example: "$20.000" -> 20000
+		const cleaned = text.replace(/[^0-9,\.]/g, '').replace(/\./g, '').replace(/,/g, '.');
+		const num = parseFloat(cleaned);
+		return isNaN(num) ? 0 : num;
+	}
+
+	function formatNumber(n) {
+		return n.toLocaleString('es-AR');
+	}
+
+	function toggleCart() {
+		const open = cart.classList.toggle('open');
+		cart.setAttribute('aria-hidden', !open);
+	}
+
+	function closeCart() {
+		cart.classList.remove('open');
+		cart.setAttribute('aria-hidden', 'true');
+	}
+	// cerrar carrito al click fuera
+	document.addEventListener('click', (e) => {
+		const isOpen = cart.classList.contains('open');
+		if (!isOpen) return;
+		const insideCart = e.composedPath().includes(cart);
+		const clickedToggle = e.target.closest('#cart-toggle');
+		if (!insideCart && !clickedToggle) closeCart();
+	});
+
+	// --- Contact form via Formspree (AJAX) ---
+	const contactForm = document.getElementById('contact-form');
+	if (contactForm) {
+		const contactMessage = document.getElementById('contact-message');
+		contactForm.addEventListener('submit', async (ev) => {
+			ev.preventDefault();
+			const submitBtn = contactForm.querySelector('.btn-enviar');
+			// Prevent submit if Formspree endpoint placeholder hasn't been replaced
+			if (contactForm.action.includes('FORM_ID')) {
+				contactMessage.className = 'contact-error';
+				contactMessage.textContent = 'Formulario no configurado: reemplaza FORM_ID con tu endpoint de Formspree (ver instrucciones en el HTML).';
+				return;
+			}
+			const fd = new FormData(contactForm);
+			try {
+				submitBtn.disabled = true;
+				submitBtn.textContent = 'Enviando...';
+				const resp = await fetch(contactForm.action, {
+					method: 'POST',
+					body: fd,
+					headers: { 'Accept': 'application/json' }
+				});
+				let data = {};
+				try { data = await resp.json(); } catch (e) { /* ignore if no json */ }
+				if (resp.ok) {
+					contactMessage.className = 'contact-success';
+					contactMessage.textContent = 'Gracias! Tu mensaje fue enviado correctamente. Revisa tu correo.';
+					contactForm.reset();
+				} else {
+					contactMessage.className = 'contact-error';
+					contactMessage.textContent = data.error || data.message || 'Ocurrió un error al enviar. Intenta nuevamente.';
+				}
+			} catch (err) {
+				contactMessage.className = 'contact-error';
+				contactMessage.textContent = 'Ocurrió un error de red. Revisa tu conexión y vuelve a intentar.';
+			} finally {
+				submitBtn.disabled = false;
+				submitBtn.textContent = 'Enviar';
+				// clear message after a short delay
+				setTimeout(() => { contactMessage.textContent = ''; contactMessage.className = ''; }, 7000);
+			}
+		});
+	}
+
+	function openCartBrief() {
+		cart.classList.add('open');
+		cart.setAttribute('aria-hidden', 'false');
+		setTimeout(() => { cart.classList.remove('open'); cart.setAttribute('aria-hidden', 'true'); }, 1500);
+	}
+});
+

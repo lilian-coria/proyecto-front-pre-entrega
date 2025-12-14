@@ -29,7 +29,7 @@
                 <ul class="ulHeader">
                    <li class="listaItem"><a class="linksheader" href="#nosotros">Nosotros</a></li>
                     <li class="listaItem"><a class="linksheader" href="#contacto">Contacto</a></li>
-                   <li><a class="linksheader" href="#carrito"><i class="fa-solid fa-cart-shopping"></i></a></li>
+                   <li><a class="linksheader" href="#" id="cart-toggle"><i class="fa-solid fa-cart-shopping"></i><span id="cart-count" class="cart-count">0</span></a></li>
                 </ul>
             </nav>
            
@@ -43,47 +43,43 @@
 
             </div>
             <h2 class="destacados" id="productos">PRODUCTOS DESTACADOS</h2> 
-            <section class="imagenDestacados" >
-                       
-                <div>
+            <section class="imagenDestacados">
+                <div class="product">
                     <img src="./asseets/img/guarda auricular.jpg" alt="producto">
-                    <h3>Producto</h3>
+                    <h3>Guarda Auricular</h3>
                     <h4>$20.000</h4>
-                    <a href="">Agregar carrito</a>
+                    <a href="#" class="add-to-cart">Agregar carrito</a>
                 </div>
-                <div>
+                <div class="product">
                     <img src="./asseets/img/jack llavero.jpg" alt="producto">
-                    <h3>Producto</h3>
+                    <h3>Jack Llavero</h3>
                     <h4>$20.000</h4>
-                    <a href="">Agregar carrito</a>
+                    <a href="#" class="add-to-cart">Agregar carrito</a>
                 </div>
-                <div>
+                <div class="product">
                     <img src="./asseets/img/sepa pag limon.jpg" alt="producto">
-                    <h3>Producto</h3>
+                    <h3>Sepa Pag Limon</h3>
                     <h4>$20.000</h4>
-                    <a href="">agregar carrito</a>
+                    <a href="#" class="add-to-cart">Agregar carrito</a>
                 </div>
-                
-                <div>
+                <div class="product">
                     <img src="./asseets/img/Rojo hongo encendedor.jpg" alt="producto">
-                    <h3>Producto</h3>
+                    <h3>Rojo Hongo Encendedor</h3>
                     <h4>$20.000</h4>
-                    <a href="">agregar carrito</a>
+                    <a href="#" class="add-to-cart">Agregar carrito</a>
                 </div>
-                <div>
+                <div class="product">
                     <img src="./asseets/img/Rojo hongo encendedor.jpg" alt="producto">
-                    <h3>Producto</h3>
+                    <h3>Rojo Hongo Encendedor</h3>
                     <h4>$20.000</h4>
-                    <a href="">agregar carrito</a>
+                    <a href="#" class="add-to-cart">Agregar carrito</a>
                 </div>
-                <div>
+                <div class="product">
                     <img src="./asseets/img/Rojo hongo encendedor.jpg" alt="producto">
-                    <h3>Producto</h3>
+                    <h3>Rojo Hongo Encendedor</h3>
                     <h4>$20.000</h4>
-                    <a href="">agregar carrito</a>
+                    <a href="#" class="add-to-cart">Agregar carrito</a>
                 </div>
-              
-                
             </section>
 
             <section>
@@ -137,7 +133,10 @@
             <h2 class="destacados" id="contacto">CONTACTO</h2>
             <section class="contacto-section">
                 
-                <form action="" class="contacto-form">
+                <!-- Para usar Formspree: 1) crea un formulario en https://formspree.io y copia el endpoint (se ve como https://formspree.io/f/xxxxx). 2) Reemplaza FORM_ID más abajo por tu id. -->
+                <form id="contact-form" action="https://formspree.io/f/xldqvzbb" method="POST" class="contacto-form">
+                    <!-- Formspree configurado: endpoint actualizado a https://formspree.io/f/xldqvzbb -->
+                    <input type="hidden" name="_subject" value="Contacto desde web - Hilos y Encantos">
             <div>
                 <label for="nombre">Nombre:
                     <input type="text" placeholder="Ingrese su Nombre"required name="nombre" id="nombre">
@@ -166,6 +165,7 @@
                 <div>
                     <button type="submit" class="btn-enviar">Enviar</button>
                 </div>
+                <div id="contact-message" role="status" aria-live="polite" style="margin-top:8px"></div>
             </form>
             </section>
 
@@ -211,7 +211,24 @@
            
            
         </footer>
-        <a href=""target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+        
+        <!-- Carrito (panel) -->
+        <aside id="cart" class="cart" aria-hidden="true">
+            <div class="cart-header">
+                <h3>Carrito</h3>
+                <button id="cart-close" aria-label="Cerrar carrito">&times;</button>
+            </div>
+            <div id="cart-items" class="cart-items">
+                <!-- items se insertan aquí -->
+            </div>
+            <div class="cart-footer">
+                <p>Total: <span id="cart-total">$0</span></p>
+                <div class="cart-actions">
+                    <button id="cart-clear" class="btn-clear">Vaciar carrito</button>
+                    <button id="checkout" class="btn-checkout">Ir a pagar</button>
+                </div>
+            </div>
+        </aside>
         <script src="./js/index.js"></script>
     </body>
   
