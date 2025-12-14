@@ -160,6 +160,30 @@ document.addEventListener('DOMContentLoaded', () => {
 				contactMessage.textContent = 'Formulario no configurado: reemplaza FORM_ID con tu endpoint de Formspree (ver instrucciones en el HTML).';
 				return;
 			}
+
+			// --- Reviews: calcular promedio y mostrar stars ---
+			(function initReviews() {
+				const reviews = Array.from(document.querySelectorAll('.review'));
+				if (reviews.length === 0) return;
+				const total = reviews.reduce((sum, r) => sum + Number(r.dataset.rating || 0), 0);
+				const avg = total / reviews.length;
+				const avgNumEl = document.getElementById('reviews-average-num');
+				const avgStarsEl = document.getElementById('reviews-average-stars');
+				const reviewsCountEl = document.getElementById('reviews-count');
+				if (avgNumEl) avgNumEl.textContent = avg.toFixed(1);
+				if (reviewsCountEl) reviewsCountEl.textContent = `${reviews.length} reseñas`;
+
+				// render stars rounded to nearest integer
+				if (avgStarsEl) {
+					avgStarsEl.innerHTML = '';
+					const rounded = Math.round(avg);
+					for (let i = 1; i <= 5; i++) {
+						const iEl = document.createElement('i');
+						iEl.className = 'fa-solid fa-star' + (i <= rounded ? ' filled' : '');
+						avgStarsEl.appendChild(iEl);
+					}
+				}
+			})();
 			const fd = new FormData(contactForm);
 			try {
 				submitBtn.disabled = true;
