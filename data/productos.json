@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "nombre": "Onikiri amigurumi",
+    "precio": 15000,
+    "imagen": "./asseets/img/onik.jpg"
+  },
+  {
+    "id": 2,
+    "nombre": "Mochila crochet",
+    "precio": 25000,
+    "imagen": "./asseets/img/mochila.jpg"
+  },
+  {
+    "id": 3,
+    "nombre": "Toallin",
+    "precio": 20000,
+    "imagen": "./asseets/img/TOALLIN.jpg"
+  },
+  {
+    "id": 4,
+    "nombre": "Pucca",
+    "precio": 20000,
+    "imagen": "./asseets/img/pucca-600x600.avif"
+  },
+  {
+    "id": 5,
+    "nombre": "Porta encendedor",
+    "precio": 30000,
+    "imagen": "./asseets/img/hongo encendedor.jpg"
+  },
+  {
+    "id": 6,
+    "nombre": "Porta Auricular",
+    "precio": 20000,
+    "imagen": "./asseets/img/portaauri.jpg"
+  }
+]

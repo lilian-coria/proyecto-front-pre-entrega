@@ -1,6 +1,10 @@
 // Carrito simple: añadir, mostrar, actualizar cantidad, eliminar, persistir en localStorage
-document.addEventListener('DOMContentLoaded', () => {
-	const addButtons = document.querySelectorAll('.add-to-cart');
+document.addEventListener('DOMContentLoaded', async () => {
+	// Products container and dynamic load
+	const productsContainer = document.getElementById('contenedorProductos');
+
+	// Load products from JSON and render
+	await loadProducts();
 	const cartToggle = document.getElementById('cart-toggle');
 	const cart = document.getElementById('cart');
 	const cartClose = document.getElementById('cart-close');
@@ -13,8 +17,16 @@ document.addEventListener('DOMContentLoaded', () => {
 	let cartData = loadCart();
 	renderCart();
 
-	// listeners
-	addButtons.forEach(btn => btn.addEventListener('click', onAddClick));
+	// inicializar reseñas (calculo promedio)
+	initReviews();
+
+	// Use event delegation so dynamically added buttons work
+	if (productsContainer) {
+		productsContainer.addEventListener('click', (e) => {
+			const btn = e.target.closest('.add-to-cart');
+			if (btn) onAddClick(e);
+		});
+	}
 	cartToggle.addEventListener('click', (e) => { e.preventDefault(); toggleCart(); });
 	cartClose.addEventListener('click', () => closeCart());
 	cartClearBtn.addEventListener('click', () => { cartData = []; saveCart(); renderCart(); });
@@ -125,6 +137,58 @@ document.addEventListener('DOMContentLoaded', () => {
 		return isNaN(num) ? 0 : num;
 	}
 
+		// --- Load products dynamically from JSON ---
+		async function loadProducts() {
+			if (!productsContainer) return;
+			try {
+				const res = await fetch('./data/productos.json');
+				if (!res.ok) throw new Error('No se pudo cargar productos');
+				const productos = await res.json();
+				productsContainer.innerHTML = '';
+				productos.forEach(prod => {
+					const div = document.createElement('div');
+					div.className = 'product';
+					div.innerHTML = `
+						<img src="${prod.imagen}" alt="${prod.nombre}">
+						<h3>${prod.nombre}</h3>
+						<h4>$${formatNumber(prod.precio)}</h4>
+						<a href="#" class="add-to-cart" data-id="${prod.id}" data-nombre="${escapeHtml(prod.nombre)}" data-precio="${prod.precio}">Agregar carrito</a>
+					`;
+					productsContainer.appendChild(div);
+				});
+			} catch (err) {
+				productsContainer.innerHTML = '<p class="empty">No se pudieron cargar los productos.</p>';
+				console.error(err);
+			}
+		}
+
+		function escapeHtml(s) {
+			return String(s).replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"}[c]));
+		}
+
+		function initReviews() {
+			const reviews = Array.from(document.querySelectorAll('.review'));
+			if (reviews.length === 0) return;
+			const total = reviews.reduce((sum, r) => sum + Number(r.dataset.rating || 0), 0);
+			const avg = total / reviews.length;
+			const avgNumEl = document.getElementById('reviews-average-num');
+			const avgStarsEl = document.getElementById('reviews-average-stars');
+			const reviewsCountEl = document.getElementById('reviews-count');
+			if (avgNumEl) avgNumEl.textContent = avg.toFixed(1);
+			if (reviewsCountEl) reviewsCountEl.textContent = `${reviews.length} reseñas`;
+
+			// render stars rounded to nearest integer
+			if (avgStarsEl) {
+				avgStarsEl.innerHTML = '';
+				const rounded = Math.round(avg);
+				for (let i = 1; i <= 5; i++) {
+					const iEl = document.createElement('i');
+					iEl.className = 'fa-solid fa-star' + (i <= rounded ? ' filled' : '');
+					avgStarsEl.appendChild(iEl);
+				}
+			}
+		}
+
 	function formatNumber(n) {
 		return n.toLocaleString('es-AR');
 	}
@@ -161,29 +225,6 @@ document.addEventListener('DOMContentLoaded', () => {
 				return;
 			}
 
-			// --- Reviews: calcular promedio y mostrar stars ---
-			(function initReviews() {
-				const reviews = Array.from(document.querySelectorAll('.review'));
-				if (reviews.length === 0) return;
-				const total = reviews.reduce((sum, r) => sum + Number(r.dataset.rating || 0), 0);
-				const avg = total / reviews.length;
-				const avgNumEl = document.getElementById('reviews-average-num');
-				const avgStarsEl = document.getElementById('reviews-average-stars');
-				const reviewsCountEl = document.getElementById('reviews-count');
-				if (avgNumEl) avgNumEl.textContent = avg.toFixed(1);
-				if (reviewsCountEl) reviewsCountEl.textContent = `${reviews.length} reseñas`;
-
-				// render stars rounded to nearest integer
-				if (avgStarsEl) {
-					avgStarsEl.innerHTML = '';
-					const rounded = Math.round(avg);
-					for (let i = 1; i <= 5; i++) {
-						const iEl = document.createElement('i');
-						iEl.className = 'fa-solid fa-star' + (i <= rounded ? ' filled' : '');
-						avgStarsEl.appendChild(iEl);
-					}
-				}
-			})();
 			const fd = new FormData(contactForm);
 			try {
 				submitBtn.disabled = true;
